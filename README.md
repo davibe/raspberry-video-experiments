@@ -12,14 +12,16 @@ This document is a reference of my video streaming experiments with a few hardwa
 
 ## Setup
 
-I wrote a [brief summary](raspberry-setup.md) of how i set up my raspberry
+I wrote a [brief and still messy summary](raspberry-setup.md) of how i set up my raspberry
 
 ## Logitech c920 + Raspberry
 
-Stream from raspberry + c920
+Stream from raspberry + c920 unsing ~half megabit
 
     gst-launch-1.0 \
       uvch264src \
+        initial-bitrate=500000 \
+        average-bitrate=500000 \
         iframe-period=3000 \
         device=/dev/video0 name=src \
         auto-start=true \
@@ -35,7 +37,9 @@ Playback (from anywhere)
 
     gst-launch-1.0 \
       tcpserversrc host=0.0.0.0 port=5000 \
-      ! gdpdepay ! decodebin ! autovideosink
+      ! gdpdepay \
+      ! decodebin \
+      ! autovideosink
 
 
 Read more on [how to set advanced c920 encoding parameters](http://oz9aec.net/software/gstreamer/using-the-logitech-c920-webcam-with-gstreamer-12)
@@ -54,7 +58,7 @@ I have done
 
 and prepended to /boot/cmdline.txt
 
-    dwc_otg.fiq_enable=1 dwc_otg.fiq_fsm_enable=1 dwc_otg.fiq_fsm_mask=0x3
+    dwc_otg.fiq_enable=1 dwc_otg.fiq_fsm_enable=1 dwc_otg.fiq_fsm_mask=0x7
 
 **So far I still see the artifacts**. *Maybe* there is less of them. I am not sure if they are introduced by the camera itself or it's the network. Need more testing.
 
@@ -128,6 +132,22 @@ Mac + hardware h264 encoding + local playback + hlssink
       ! hlssink location="test/testa%02d.ts" max-files=6 playlist-location=test/playlist.m3u8 target-duration=1 \
       osxaudiosrc \
       ! audioconvert \
+      ! faac ! n.
+
+    gst-launch-1.0 \
+      videotestsrc is-live=true \
+      ! videoconvert \
+      ! videoscale n-threads=8 \
+      ! video/x-raw, framerate=25/1, width=80, height=60 \
+      ! videoconvert \
+      ! x264enc tune=zerolatency byte-stream=true threads=1 key-int-max=3 intra-refresh=true \
+      ! h264parse \
+      ! queue \
+      ! mpegtsmux name=n \
+      ! hlssink location="test/testa%02d.ts" max-files=6 playlist-location=test/playlist.m3u8 target-duration=1 \
+      audiotestsrc is-live=true \
+      ! audioconvert \
+      ! queue \
       ! faac ! n.
 
 Mac + hardware h264 encoding + local playback + hlssink2 (does not work with gstreamer 1.14.1)
