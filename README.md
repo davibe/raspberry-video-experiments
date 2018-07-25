@@ -21,7 +21,7 @@ The c920 is a camera that's capable of producing hardware encoded h264 streams. 
 I was able to 
 [stream hardware encoded h264 using rtsp](pipelines/producer_c920_h264_aac_rtspclient.sh) 
 to a 
-[rtsp relay](https://github.com/jayridge/rtsprelay/blob/master/rtsprelay.c) 
+[rtsp relay](https://github.com/jayridge/rtsprelay/) 
 running on my mac. 
 The stream 
 [played fine](pipelines/consumer_mac_rtsp.sh) 
