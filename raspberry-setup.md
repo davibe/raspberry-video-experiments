@@ -21,7 +21,7 @@ Boot the raspberry with usb connected and login
     ssh -o PubkeyAuthentication=no pi@raspberrypi.local
 
 
-## Next setups
+## Raspi config
 
 Type `sudo raspi-config` and
 
