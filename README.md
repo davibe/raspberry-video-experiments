@@ -1,7 +1,7 @@
 
 # Intro
 
-This document is a reference of my video streaming experiments with a few hardware toys
+This document is a WIP reference of my video streaming experiments with a few hardware toys
 
 - raspberry pi zero w
 - logitech c920
