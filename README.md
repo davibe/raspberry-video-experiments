@@ -1,7 +1,7 @@
 
 # Intro
 
-This document is a WIP reference of my video streaming experiments with a few hardware toys
+This document is a WIP reference of my video streaming experiments with [GStreamer](https://gstreamer.freedesktop.org) and a few hardware toys
 
 - raspberry pi zero w
 - logitech c920
@@ -10,11 +10,11 @@ This document is a WIP reference of my video streaming experiments with a few ha
 
 ## Setup
 
-I wrote a [brief and still messy summary](raspberry-setup.md) of how i set up my raspbian lite.
+I wrote a [brief and still messy summary](raspberry-setup.md) of how I set up my raspbian lite.
 
 ### GStreamer versions
 
-Current raspbian ships with gstreamer 1.10.2 but the last gstreamer release as of today is 1.14.2 so i decided to [build and install the latest version](https://github.com/davibe/docker-gstreamer-raspbian-build).
+Current raspbian ships with gstreamer 1.10.2 but the last gstreamer release as of today is 1.14.2 so I decided to [build and install the latest version](https://github.com/davibe/docker-gstreamer-raspbian-build).
 
 ### Logitec C920
 
@@ -35,8 +35,7 @@ with very low latency.
 
 I thought I could
 [stream it to disk as HLS](pipelines/producer_c920_h264_aac_hlssink.sh). 
-- GStreamer 1.10.2: I've got a critical assertion 
-error and the pipeline did not run at all.
+- GStreamer 1.10.2: the pipeline died with a critical assertion error right at launch
 - GStreamer 1.14.2: I still got the same critical error in console 
 but the HLS stream worked fine!
 
@@ -46,11 +45,12 @@ instead of the hardware encoder of the camera.
 - GStreamer 1.10.2: The hls segments are created
 but they are not actually playable. I think the problem is that omxh264enc
 does not output correct SPS/PPS and AU delemiters at the beginning of each
-segment. If i try the same
+segment. If I try the same
 [with x264 software encoder](pipelines/producer_x264_aac_hlssink)
 it works fine. However, software encoding is very heavy and the pi zero w can
 only handle very low resolutions (320x240).
-- GStreamer 1.14.2: everything works just fine. Using omxh264enc I can encode easily up to 720x420 (85% cpu)
+- GStreamer 1.14.2: everything works just fine. 
+Using omxh264enc I can encode easily up to 720x420 (85% cpu)
 
 #### Artifacts
 
