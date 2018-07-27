@@ -37,7 +37,7 @@ I also tried to
 instead of the hardware encoder of the camera. The pi w was able to handle up to 720x480 (85% cpu).
 
 Pure software encoding [with x264 software encoder](pipelines/producer_x264_aac_hlssink)
-worked as well but its very heavy and the pi could only handle very low resolutions (320x240).
+worked as well but its very heavy and the pi could only handle very low resolutions around 320x240.
 
 #### Artifacts
 
