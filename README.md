@@ -28,24 +28,16 @@ with very low latency.
 
 #### HLS
 
-I thought I could
-[stream it to disk as HLS](pipelines/producer_c920_h264_aac_hlssink.sh). 
-- GStreamer 1.10.2: the pipeline died with a critical assertion error right at launch
-- GStreamer 1.14.2: I still got the same critical error in console 
-but the HLS stream worked fine!
+I even successfully
+[streamed it to disk as HLS](pipelines/producer_c920_h264_aac_hlssink.sh). 
+The pipeline generated some critical error in the console but the stream worked fine.
 
 I also tried to
 [encode the video stream using omxh264enc](pipeline/producer_c920_omxh264_aac_hjlssink.sh)
-instead of the hardware encoder of the camera. 
-- GStreamer 1.10.2: The hls segments are created
-but they are not actually playable. I think the problem is that omxh264enc
-does not output correct SPS/PPS and AU delemiters at the beginning of each
-segment. If I try the same
-[with x264 software encoder](pipelines/producer_x264_aac_hlssink)
-it works fine. However, software encoding is very heavy and the pi zero w can
-only handle very low resolutions (320x240).
-- GStreamer 1.14.2: everything works just fine. 
-Using omxh264enc I can encode easily up to 720x420 (85% cpu)
+instead of the hardware encoder of the camera. The pi w was able to handle up to 720x480 (85% cpu).
+
+Pure software encoding [with x264 software encoder](pipelines/producer_x264_aac_hlssink)
+worked as well but its very heavy and the pi could only handle very low resolutions (320x240).
 
 #### Artifacts
 
@@ -65,7 +57,6 @@ and prepended to `/boot/cmdline.txt`
 
 I still see the artifacts from time to time. I am not sure if these ones
 are introduced by the camera itself or it's the network. Need more testing.
-
 
 ### Raspberry camera
 
