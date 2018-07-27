@@ -1,20 +1,15 @@
 
-# Intro
+# Readme
 
-This document is a WIP reference of my video streaming experiments with [GStreamer](https://gstreamer.freedesktop.org) and a few hardware toys
-
-- raspberry pi zero w
-- logitech c920
-- random [raspberry camera](https://www.amazon.it/gp/product/B0748GQ32H/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1) from amazon
-- my macbook pro
+This document is a WIP reference of my video streaming experiments with [GStreamer](https://gstreamer.freedesktop.org), raspberry pi w, logitech c920, random [raspberry camera](https://www.amazon.it/gp/product/B0748GQ32H/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1) and my macbook pro
 
 ## Setup
 
-I wrote a [brief and still messy summary](raspberry-setup.md) of how I set up my raspbian lite.
+I wrote a [brief summary](raspberry-setup.md) of how I set up my raspbian lite.
 
 ### GStreamer versions
 
-Current raspbian ships with gstreamer 1.10.2 but the last gstreamer release as of today is 1.14.2 so I decided to [build and install the latest version](https://github.com/davibe/docker-gstreamer-raspbian-build).
+Current raspbian ships with GStreamer 1.10.2 but the last GStreamer release as of today is 1.14.2 so I decided to [build and install the latest version](https://github.com/davibe/docker-gstreamer-raspbian-build). *Note: the stock GStreamer 1.10.2 has a few problems and most of the examples here would not work.*
 
 ### Logitec C920
 
@@ -54,7 +49,7 @@ Using omxh264enc I can encode easily up to 720x420 (85% cpu)
 
 #### Artifacts
 
-Streaming hardware-encoded h264 from the c920 works but the stream seems to have some artifacts.
+Streaming hardware-encoded h264 from the c920 works but the stream seems to have some artifacts from time to time. It looks like B-frames are lost.
 
 I have tried to get rid of them. After reading 
 [this](https://www.raspberrypi.org/forums/viewtopic.php?t=67629) 
